@@ -23,7 +23,7 @@ enum EVSFLogEntryType
 };
 
 /* modified for external use*/
-extern void vsf_log_common(struct vsf_session* p_sess, int succeeded,
+void vsf_log_common(struct vsf_session* p_sess, int succeeded,
                            enum EVSFLogEntryType what,
                            const struct mystr* p_str);
 

@@ -16,9 +16,9 @@
 
 /* File local functions */
 static int vsf_log_type_is_transfer(enum EVSFLogEntryType type);
-static void vsf_log_common(struct vsf_session* p_sess, int succeeded,
-                           enum EVSFLogEntryType what,
-                           const struct mystr* p_str);
+// static void vsf_log_common(struct vsf_session* p_sess, int succeeded,
+//                            enum EVSFLogEntryType what,
+//                            const struct mystr* p_str);
 static void vsf_log_do_log_vsftpd_format(struct vsf_session* p_sess,
                                          struct mystr* p_str, int succeeded,
                                          enum EVSFLogEntryType what,
@@ -127,7 +127,7 @@ vsf_log_do_log(struct vsf_session* p_sess, int succeeded)
   p_sess->log_type = 0;
 }
 
-static void
+void
 vsf_log_common(struct vsf_session* p_sess, int succeeded,
                enum EVSFLogEntryType what, const struct mystr* p_str)
 {
