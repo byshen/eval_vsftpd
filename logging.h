@@ -22,6 +22,11 @@ enum EVSFLogEntryType
   kVSFLogEntryDebug,
 };
 
+/* modified for external use*/
+extern void vsf_log_common(struct vsf_session* p_sess, int succeeded,
+                           enum EVSFLogEntryType what,
+                           const struct mystr* p_str);
+
 /* vsf_log_init()
  * PURPOSE
  * Initialize the logging services, by opening a writable file descriptor to

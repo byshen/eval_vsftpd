@@ -673,6 +673,11 @@ handle_retr(struct vsf_session* p_sess, int is_http)
   prepend_path_to_filename(&p_sess->log_str);
   if (!vsf_access_check_file(&p_sess->ftp_arg_str))
   {
+    /* modified */
+    struct mystr* tmp_log;
+    str_alloc_text(tmp_log, "Permission denied because of configuration: deny_file");
+    vsf_log_common(p_sess, 0, (enum EVSFLogEntryType) p_sess->log_type, tmp_log);
+
     vsf_cmdio_write(p_sess, FTP_NOPERM, "Permission denied.");
     return;
   }
