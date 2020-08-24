@@ -82,9 +82,20 @@ static void resolve_tilde(struct mystr* p_str, struct vsf_session* p_sess);
 
 void log_deny_file(struct vsf_session* p_sess) {
 /* modified */
-    struct mystr tmp_log;
-    str_alloc_text(&tmp_log, "Permission denied because of configuration: deny_file");
-    vsf_log_common(p_sess, 0, (enum EVSFLogEntryType) p_sess->log_type, &tmp_log);
+  struct mystr tmp_log;
+  str_alloc_text(&tmp_log, "Permission denied because of configuration: deny_file");
+  vsf_log_common(p_sess, 0, (enum EVSFLogEntryType) p_sess->log_type, &tmp_log);
+}
+
+void log_deny_anon_other_write_enable(struct vsf_session* p_sess) {
+/* modified */
+  struct mystr tmp_log;
+  if (p_sess->is_anonymous) 
+    str_alloc_text(&tmp_log, "Permission denied because of configuration: write_enable; please also check configuration for anon_other_write_enable for anonymous users.");
+  else 
+    str_alloc_text(&tmp_log, "Permission denied because of configuration: write_enable.");
+
+  vsf_log_common(p_sess, 0, (enum EVSFLogEntryType) p_sess->log_type, &tmp_log);
 }
 
 void
@@ -411,18 +422,28 @@ process_post_login(struct vsf_session* p_sess)
     {
       handle_logged_in_pass(p_sess);
     }
+    else if (str_equal_text(&p_sess->ftp_cmd_str, "APPE") ||
+             str_equal_text(&p_sess->ftp_cmd_str, "RMD") ||
+             str_equal_text(&p_sess->ftp_cmd_str, "XRMD") ||
+             str_equal_text(&p_sess->ftp_cmd_str, "RNFR") ||
+             str_equal_text(&p_sess->ftp_cmd_str, "RNTO") 
+    ) 
+    {
+      log_deny_anon_other_write_enable(p_sess);
+      vsf_cmdio_write(p_sess, FTP_NOPERM, "Permission denied.");   
+    }
     else if (str_equal_text(&p_sess->ftp_cmd_str, "PASV") ||
              str_equal_text(&p_sess->ftp_cmd_str, "PORT") ||
              str_equal_text(&p_sess->ftp_cmd_str, "STOR") ||
              str_equal_text(&p_sess->ftp_cmd_str, "MKD") ||
              str_equal_text(&p_sess->ftp_cmd_str, "XMKD") ||
-             str_equal_text(&p_sess->ftp_cmd_str, "RMD") ||
-             str_equal_text(&p_sess->ftp_cmd_str, "XRMD") ||
+            //  str_equal_text(&p_sess->ftp_cmd_str, "RMD") ||
+            //  str_equal_text(&p_sess->ftp_cmd_str, "XRMD") ||
              str_equal_text(&p_sess->ftp_cmd_str, "DELE") ||
-             str_equal_text(&p_sess->ftp_cmd_str, "RNFR") ||
-             str_equal_text(&p_sess->ftp_cmd_str, "RNTO") ||
+            //  str_equal_text(&p_sess->ftp_cmd_str, "RNFR") ||
+            //  str_equal_text(&p_sess->ftp_cmd_str, "RNTO") ||
              str_equal_text(&p_sess->ftp_cmd_str, "SITE") ||
-             str_equal_text(&p_sess->ftp_cmd_str, "APPE") ||
+            //  str_equal_text(&p_sess->ftp_cmd_str, "APPE") ||
              str_equal_text(&p_sess->ftp_cmd_str, "EPSV") ||
              str_equal_text(&p_sess->ftp_cmd_str, "EPRT") ||
              str_equal_text(&p_sess->ftp_cmd_str, "RETR") ||
