@@ -40,7 +40,7 @@ void log_user_list(struct vsf_session* p_sess) {
 /* modified */
     struct mystr tmp_log;
     str_alloc_text(&tmp_log, "Permission denied because of configuration: userlist_file and userlist_deny.");
-    vsf_log_common(p_sess, 0, (enum EVSFLogEntryType) p_sess->log_type, &tmp_log);
+    vsf_log_common(p_sess, 0, kVSFLogEntryLogin , &tmp_log);
 }
 
 void
