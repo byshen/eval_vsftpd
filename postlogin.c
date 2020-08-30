@@ -90,6 +90,7 @@ void log_deny_file(struct vsf_session* p_sess) {
 void log_deny_anon_other_write_enable(struct vsf_session* p_sess) {
 /* modified */
   struct mystr tmp_log;
+  vsf_log_start_entry(p_sess, kVSFLogEntryFTPOutput);
   if (p_sess->is_anonymous) 
     str_alloc_text(&tmp_log, "Permission denied because of configuration: write_enable; please also check configuration for anon_other_write_enable for anonymous users.");
   else 
@@ -425,6 +426,7 @@ process_post_login(struct vsf_session* p_sess)
     else if (str_equal_text(&p_sess->ftp_cmd_str, "APPE") ||
              str_equal_text(&p_sess->ftp_cmd_str, "RMD") ||
              str_equal_text(&p_sess->ftp_cmd_str, "XRMD") ||
+             str_equal_text(&p_sess->ftp_cmd_str, "DELE") ||
              str_equal_text(&p_sess->ftp_cmd_str, "RNFR") ||
              str_equal_text(&p_sess->ftp_cmd_str, "RNTO") 
     ) 
@@ -439,7 +441,7 @@ process_post_login(struct vsf_session* p_sess)
              str_equal_text(&p_sess->ftp_cmd_str, "XMKD") ||
             //  str_equal_text(&p_sess->ftp_cmd_str, "RMD") ||
             //  str_equal_text(&p_sess->ftp_cmd_str, "XRMD") ||
-             str_equal_text(&p_sess->ftp_cmd_str, "DELE") ||
+            //  str_equal_text(&p_sess->ftp_cmd_str, "DELE") ||
             //  str_equal_text(&p_sess->ftp_cmd_str, "RNFR") ||
             //  str_equal_text(&p_sess->ftp_cmd_str, "RNTO") ||
              str_equal_text(&p_sess->ftp_cmd_str, "SITE") ||
