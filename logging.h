@@ -86,5 +86,10 @@ void vsf_log_do_log(struct vsf_session* p_sess, int succeeded);
 void vsf_log_line(struct vsf_session* p_sess, enum EVSFLogEntryType what,
                   struct mystr* p_str);
 
+
+void
+vsf_log_line_fail(struct vsf_session* p_sess, enum EVSFLogEntryType what,
+             struct mystr* p_str)
+             
 #endif /* VSF_LOGGING_H */
 
