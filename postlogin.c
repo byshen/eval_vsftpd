@@ -80,14 +80,14 @@ static void get_unique_filename(struct mystr* p_outstr,
 static int data_transfer_checks_ok(struct vsf_session* p_sess);
 static void resolve_tilde(struct mystr* p_str, struct vsf_session* p_sess);
 
-static void log_deny_file(struct vsf_session* p_sess);
+// static void log_deny_file(struct vsf_session* p_sess);
 
-static void log_deny_file(struct vsf_session* p_sess) {
-/* modified */
-    struct mystr tmp_log;
-    str_alloc_text(&tmp_log, "Permission denied because of configuration: deny_file");
-    vsf_log_common(p_sess, 0, (enum EVSFLogEntryType) p_sess->log_type, &tmp_log);
-}
+// static void log_deny_file(struct vsf_session* p_sess) {
+// /* modified */
+//     struct mystr tmp_log;
+//     str_alloc_text(&tmp_log, "Permission denied because of configuration: deny_file");
+//     vsf_log_common(p_sess, 0, (enum EVSFLogEntryType) p_sess->log_type, &tmp_log);
+// }
 
 void
 process_post_login(struct vsf_session* p_sess)
