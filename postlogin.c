@@ -92,6 +92,19 @@ static void resolve_tilde(struct mystr* p_str, struct vsf_session* p_sess);
 //     vsf_log_line_fail(p_sess, kVSFLogEntryDownload, &tmp_log);
 // }
 
+
+
+void log_deny_anon_other_write_enable(struct vsf_session* p_sess) {
+/* modified */
+  struct mystr tmp_log;
+  vsf_log_start_entry(p_sess, kVSFLogEntryFTPOutput);
+  if (p_sess->is_anonymous) 
+    str_alloc_text(&tmp_log, "Permission denied because of configuration: write_enable; please also check configuration for anon_other_write_enable for anonymous users.");
+  else 
+    str_alloc_text(&tmp_log, "Permission denied because of configuration: write_enable.");
+  vsf_log_common(p_sess, 0, (enum EVSFLogEntryType) p_sess->log_type, &tmp_log);
+}
+
 void
 process_post_login(struct vsf_session* p_sess)
 {
