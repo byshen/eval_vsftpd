@@ -89,7 +89,7 @@ void vsf_log_line(struct vsf_session* p_sess, enum EVSFLogEntryType what,
 
 void
 vsf_log_line_fail(struct vsf_session* p_sess, enum EVSFLogEntryType what,
-             struct mystr* p_str)
-             
+             struct mystr* p_str);
+
 #endif /* VSF_LOGGING_H */
 
