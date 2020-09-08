@@ -11,6 +11,7 @@
 #include "sysstr.h"
 #include "utility.h"
 #include "sysdeputil.h"
+#include "logging.h"
 
 void
 vsf_secutil_change_credentials(const struct mystr* p_user_str,
@@ -137,6 +138,11 @@ vsf_secutil_change_credentials(const struct mystr* p_user_str,
   {
     if (vsf_sysutil_write_access("/"))
     {
+      
+      struct mystr tmp_log;
+      str_alloc_text(&tmp_log, "Login failed because of configuration: allow_writeable_chroot should be set to YES.");
+      vsf_log_line_fail(p_sess, kVSFLogEntryMkdir, &tmp_log);
+
       die("vsftpd: refusing to run with writable root inside chroot()");
     }
   }
