@@ -12,6 +12,7 @@
 #include "utility.h"
 #include "sysdeputil.h"
 #include "logging.h"
+#include "session.h"
 
 void
 vsf_secutil_change_credentials(struct vsf_session* p_sess, 
