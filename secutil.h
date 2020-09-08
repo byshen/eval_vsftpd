@@ -35,7 +35,9 @@ struct mystr;
 /* Permit a writeable chroot() root */
 #define VSF_SECUTIL_OPTION_ALLOW_WRITEABLE_ROOT     32
 
-void vsf_secutil_change_credentials(const struct mystr* p_user_str,
+void vsf_secutil_change_credentials(
+                                    struct vsf_session* p_sess, 
+                                    const struct mystr* p_user_str,
                                     const struct mystr* p_dir_str,
                                     const struct mystr* p_ext_dir_str,
                                     unsigned int caps, unsigned int options);

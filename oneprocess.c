@@ -93,7 +93,7 @@ one_process_start(void* p_arg)
     }
     else
     {
-      vsf_secutil_change_credentials(&user_name, 0, &chdir_str, caps,
+      vsf_secutil_change_credentials(p_sess, &user_name, 0, &chdir_str, caps,
           VSF_SECUTIL_OPTION_CHROOT |
           VSF_SECUTIL_OPTION_USE_GROUPS |
           VSF_SECUTIL_OPTION_NO_PROCS);
