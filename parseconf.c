@@ -230,7 +230,8 @@ vsf_parseconf_load_file(const char* p_filename, int errs_fatal)
         vsf_sysutil_statbuf_get_uid(p_statbuf) != vsf_sysutil_getuid() ||
         !vsf_sysutil_statbuf_is_regfile(p_statbuf))
     {
-      die2("config file not owned by correct user, or not a file", p_filename);
+      // could not add log in the server log, because the session has not been initiated.
+      die2("The config file is not owned by root, or not a file: ", p_filename);
     }
     vsf_sysutil_free(p_statbuf);
   }

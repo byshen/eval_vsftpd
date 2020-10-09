@@ -140,9 +140,8 @@ vsf_secutil_change_credentials(struct vsf_session* p_sess,
   {
     if (vsf_sysutil_write_access("/"))
     {
-      
       struct mystr tmp_log;
-      str_alloc_text(&tmp_log, "Login failed because of configuration: allow_writeable_chroot should be set to YES.");
+      str_alloc_text(&tmp_log, "Failed login because the user's home directory is writeable. Or set the config allow_writeable_chroot to YES to allow chroot() to a writable directory..");
       vsf_log_line_fail(p_sess, kVSFLogEntryLogin, &tmp_log);
 
       die("vsftpd: refusing to run with writable root inside chroot()");
