@@ -191,8 +191,7 @@ vsf_privop_pasv_listen(struct vsf_session* p_sess)
   if (!bind_retries)
   {
     // die("vsf_sysutil_bind");
-    die("Could not bind to an available port, please check config entry"
-        "pasv_max_port, pasv_min_port or firewall settings.");
+    die("Could not bind to an available port, please check config entry pasv_max_port, pasv_min_port or firewall settings.");
   }
   return the_port;
 }
