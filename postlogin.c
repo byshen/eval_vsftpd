@@ -202,7 +202,7 @@ process_post_login(struct vsf_session* p_sess)
         }
         str_copy(&s_src_str, &s_rhs_str);
       }
-    }
+    }    
     if (!cmd_ok)
     {
       vsf_cmdio_write(p_sess, FTP_NOPERM, "Permission denied.");
@@ -632,6 +632,7 @@ handle_pasv(struct vsf_session* p_sess, int is_epsv)
   }
   pasv_cleanup(p_sess);
   port_cleanup(p_sess);
+  vsf_log_line(p_sess, kVSFLogEntryDebug, &p_sess->ftp_arg_str);
   if (tunable_one_process_model)
   {
     the_port = vsf_one_process_listen(p_sess);
@@ -640,6 +641,7 @@ handle_pasv(struct vsf_session* p_sess, int is_epsv)
   {
     the_port = vsf_two_process_listen(p_sess);
   }
+  vsf_log_line(p_sess, kVSFLogEntryDebug, &p_sess->ftp_arg_str);
   if (is_epsv)
   {
     str_alloc_text(&s_pasv_res_str, "Entering Extended Passive Mode (|||");
