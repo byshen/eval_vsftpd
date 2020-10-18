@@ -20,7 +20,7 @@
 #include "logging.h"
 
 
-void log_user_list(struct vsf_session* p_sess) {
+void debug_log_user_list(struct vsf_session* p_sess) {
 /* modified */
     struct mystr tmp_log;
     str_alloc_text(&tmp_log, "Permission denied because of configuration: userlist_file and userlist_deny.");
@@ -204,7 +204,7 @@ vsf_privop_pasv_listen(struct vsf_session* p_sess)
     // vsf_log_line_fail(p_sess, kVSFLogEntryConnection, &tmp_log);
     // // die(tmp_log.PRIVATE_HANDS_OFF_p_buf);
 
-    log_user_list(p_sess);
+    debug_log_user_list(p_sess);
 
     die("Could not bind to an available port, please check config entry pasv_max_port, pasv_min_port or firewall settings.");
     // die("Could not bind to an available port");
