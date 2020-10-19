@@ -305,10 +305,11 @@ vsf_log_do_log_vsftpd_format(struct vsf_session* p_sess, struct mystr* p_str,
     str_append_text(p_str, "] ");
   }
   /* User */
-  if (succeeded && !str_isempty(&p_sess->user_str))
+  if (!str_isempty(&p_sess->user_str))
   {
     str_append_char(p_str, '[');
-    str_append_str(p_str, &p_sess->user_str);
+    if (succeeded)
+      str_append_str(p_str, &p_sess->user_str);
     str_append_text(p_str, "] ");
   }
   /* And the action */
