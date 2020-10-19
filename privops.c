@@ -183,12 +183,13 @@ vsf_privop_pasv_listen(struct vsf_session* p_sess)
       }
     }
 
-
-    struct mystr tmp_log;
-    str_alloc_text(&tmp_log, "Could not bind to port: ");
-    str_append_ulong(&tmp_log, (unsigned long) the_port);
-    str_append_text(&tmp_log, ",which chosen based on configuration: pasv_max_port and pasv_min_port");
-    vsf_log_line_fail(p_sess, kVSFLogEntryConnection, &tmp_log);
+    if (vsf_sysutil_get_error() == kVSFSysUtilErrADDRINUSE) {
+      struct mystr tmp_log;
+      str_alloc_text(&tmp_log, "Bind failed, port ");
+      str_append_ulong(&tmp_log, (unsigned long) the_port);
+      str_append_text(&tmp_log, "is in use, check configuration entry: pasv_max_port and pasv_min_port");
+      vsf_log_line_fail(p_sess, kVSFLogEntryConnection, &tmp_log);
+    }
     // die(tmp_log.PRIVATE_HANDS_OFF_p_buf);
 
     /* SELinux systems can give you an inopportune EACCES, it seems. */
@@ -208,8 +209,7 @@ vsf_privop_pasv_listen(struct vsf_session* p_sess)
   if (!bind_retries)
   {
     // die("vsf_sysutil_bind");
-
-    die("Could not bind to an available port, please check config entry pasv_max_port, pasv_min_port or firewall settings.");
+    die("Could not bind to an available port, please check config entry pasv_max_port, pasv_min_port or network settings.");
     // die("Could not bind to an available port");
   }
   return the_port;

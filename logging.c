@@ -148,17 +148,8 @@ vsf_log_common(struct vsf_session* p_sess, int succeeded,
   /* Handle vsftpd.log line if appropriate */
   if (p_sess->vsftpd_log_fd != -1)
   {
-    if (!succeeded) {
-      vsf_sysutil_write_loop(0,"OK",2);
-    }
     vsf_log_do_log_vsftpd_format(p_sess, &s_log_str, succeeded, what, p_str);
-    if (!succeeded) {
-      vsf_sysutil_write_loop(0,s_log_str.PRIVATE_HANDS_OFF_p_buf, vsf_sysutil_strlen(s_log_str.PRIVATE_HANDS_OFF_p_buf));
-    }
     vsf_log_do_log_to_file_fail(p_sess->vsftpd_log_fd, &s_log_str, succeeded);
-    if (!succeeded) {
-      vsf_sysutil_write_loop(0,"OK",2);
-    }
   }
   /* Handle syslog() line if appropriate */
   if (tunable_syslog_enable)
@@ -196,17 +187,12 @@ vsf_log_do_log_to_file(int fd, struct mystr* p_str)
 
 static void
 vsf_log_do_log_to_file_fail(int fd, struct mystr* p_str, int succeeded)
-{
-  if (!succeeded) {  vsf_sysutil_write_loop(0,"FILE1",5);}
-  
+{ 
   if (!tunable_no_log_lock)
   {
-    if (!succeeded) { vsf_sysutil_write_loop(0,"FILE2",5);}
     int retval = vsf_sysutil_lock_file_write(fd);
-    if (!succeeded) { vsf_sysutil_write_loop(0,"FILE3",5);}
     if (vsf_sysutil_retval_is_error(retval))
     {
-      if (!succeeded) { vsf_sysutil_write_loop(0,"FILE4",5);}
       return;
     }
   }
@@ -214,15 +200,11 @@ vsf_log_do_log_to_file_fail(int fd, struct mystr* p_str, int succeeded)
   str_append_char(p_str, '\n');
   
   /* Ignore write failure; maybe the disk filled etc. */
-  if (!succeeded) { vsf_sysutil_write_loop(0,"FILE5",5);}
   (void) str_write_loop(p_str, fd);
-  if (!succeeded) { vsf_sysutil_write_loop(0,"FILE6",5);}
   if (!tunable_no_log_lock)
   {
-    if (!succeeded) { vsf_sysutil_write_loop(0,"FILE6",5);}
     vsf_sysutil_unlock_file(fd);
   }
-  if (!succeeded) { vsf_sysutil_write_loop(0,"FILE7",5);}
 }
 
 
