@@ -613,6 +613,7 @@ handle_pasv(struct vsf_session* p_sess, int is_epsv)
   static struct mystr s_pasv_res_str;
   static struct vsf_sysutil_sockaddr* s_p_sockaddr;
   int is_ipv6 = vsf_sysutil_sockaddr_is_ipv6(p_sess->p_local_addr);
+  
   if (is_epsv && !str_isempty(&p_sess->ftp_arg_str))
   {
     int argval;
@@ -632,7 +633,6 @@ handle_pasv(struct vsf_session* p_sess, int is_epsv)
   }
   pasv_cleanup(p_sess);
   port_cleanup(p_sess);
-  vsf_log_line(p_sess, kVSFLogEntryDebug, &p_sess->ftp_arg_str);
   if (tunable_one_process_model)
   {
     the_port = vsf_one_process_listen(p_sess);

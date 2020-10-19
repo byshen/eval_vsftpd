@@ -182,7 +182,6 @@ vsf_privop_pasv_listen(struct vsf_session* p_sess)
         break;
       }
     }
-    // vsf_log_start_entry(p_sess, kVSFLogEntryConnection);
 
     /* SELinux systems can give you an inopportune EACCES, it seems. */
     if (vsf_sysutil_get_error() == kVSFSysUtilErrADDRINUSE ||
@@ -193,7 +192,11 @@ vsf_privop_pasv_listen(struct vsf_session* p_sess)
       continue;
     }
     die("vsf_sysutil_bind / listen");
-  }
+  }  
+  
+  vsf_log_start_entry(p_sess, kVSFLogEntryConnection);
+  str_copy(&p_sess->log_str, &p_sess->ftp_arg_str);
+ 
   if (!bind_retries)
   {
     // die("vsf_sysutil_bind");
