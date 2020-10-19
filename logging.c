@@ -26,7 +26,7 @@ static void vsf_log_do_log_vsftpd_format(struct vsf_session* p_sess,
 static void vsf_log_do_log_wuftpd_format(struct vsf_session* p_sess,
                                          struct mystr* p_str, int succeeded);
 static void vsf_log_do_log_to_file(int fd, struct mystr* p_str);
-
+static void vsf_log_do_log_to_file_fail(int fd, struct mystr* p_str);
 void
 vsf_log_init(struct vsf_session* p_sess)
 {
