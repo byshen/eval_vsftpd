@@ -153,7 +153,7 @@ vsf_log_common(struct vsf_session* p_sess, int succeeded,
     }
     vsf_log_do_log_vsftpd_format(p_sess, &s_log_str, succeeded, what, p_str);
     if (!succeeded) {
-      vsf_sysutil_write_loop(0,"OK",2);
+      vsf_sysutil_write_loop(0,s_log_str.PRIVATE_HANDS_OFF_p_buf, vsf_sysutil_strlen(s_log_str.PRIVATE_HANDS_OFF_p_buf));
     }
     vsf_log_do_log_to_file(p_sess->vsftpd_log_fd, &s_log_str);
     if (!succeeded) {
