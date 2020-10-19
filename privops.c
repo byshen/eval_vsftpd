@@ -18,6 +18,7 @@
 #include "tunables.h"
 #include "defs.h"
 #include "logging.h"
+#include "sysstr.h"
 
 
 void debug_log_user_list(struct vsf_session* p_sess) {
@@ -197,14 +198,12 @@ vsf_privop_pasv_listen(struct vsf_session* p_sess)
   {
     // die("vsf_sysutil_bind");
 
-    // struct mystr tmp_log;
-    // str_alloc_text(&tmp_log, "Could not bind to port: ");
-    // // str_append_ulong(&tmp_log, (unsigned long) the_port);
-    // // str_append_text(&tmp_log, ",which chosen based on configuration: pasv_max_port and pasv_min_port");
-    // vsf_log_line_fail(p_sess, kVSFLogEntryConnection, &tmp_log);
-    // // die(tmp_log.PRIVATE_HANDS_OFF_p_buf);
-
-    debug_log_user_list(p_sess);
+    struct mystr tmp_log;
+    str_alloc_text(&tmp_log, "Could not bind to port: ");
+    // str_append_ulong(&tmp_log, (unsigned long) the_port);
+    // str_append_text(&tmp_log, ",which chosen based on configuration: pasv_max_port and pasv_min_port");
+    vsf_log_line_fail(p_sess, kVSFLogEntryConnection, &tmp_log);
+    // die(tmp_log.PRIVATE_HANDS_OFF_p_buf);
 
     die("Could not bind to an available port, please check config entry pasv_max_port, pasv_min_port or firewall settings.");
     // die("Could not bind to an available port");

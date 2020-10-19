@@ -148,8 +148,17 @@ vsf_log_common(struct vsf_session* p_sess, int succeeded,
   /* Handle vsftpd.log line if appropriate */
   if (p_sess->vsftpd_log_fd != -1)
   {
+    if (!succeeded) {
+      vsf_sysutil_write_loop(0,"OK",2);
+    }
     vsf_log_do_log_vsftpd_format(p_sess, &s_log_str, succeeded, what, p_str);
+    if (!succeeded) {
+      vsf_sysutil_write_loop(0,"OK",2);
+    }
     vsf_log_do_log_to_file(p_sess->vsftpd_log_fd, &s_log_str);
+    if (!succeeded) {
+      vsf_sysutil_write_loop(0,"OK",2);
+    }
   }
   /* Handle syslog() line if appropriate */
   if (tunable_syslog_enable)
