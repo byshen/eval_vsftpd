@@ -187,7 +187,7 @@ vsf_privop_pasv_listen(struct vsf_session* p_sess)
       struct mystr tmp_log;
       str_alloc_text(&tmp_log, "Bind failed, port ");
       str_append_ulong(&tmp_log, (unsigned long) the_port);
-      str_append_text(&tmp_log, "is in use, check configuration entry: pasv_max_port and pasv_min_port");
+      str_append_text(&tmp_log, " is in use, check configuration entry: pasv_max_port and pasv_min_port");
       vsf_log_line_fail(p_sess, kVSFLogEntryConnection, &tmp_log);
     }
     // die(tmp_log.PRIVATE_HANDS_OFF_p_buf);
