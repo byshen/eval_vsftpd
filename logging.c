@@ -26,7 +26,7 @@ static void vsf_log_do_log_vsftpd_format(struct vsf_session* p_sess,
 static void vsf_log_do_log_wuftpd_format(struct vsf_session* p_sess,
                                          struct mystr* p_str, int succeeded);
 static void vsf_log_do_log_to_file(int fd, struct mystr* p_str);
-static void vsf_log_do_log_to_file_fail(int fd, struct mystr* p_str, int succeeded);
+// static void vsf_log_do_log_to_file_fail(int fd, struct mystr* p_str, int succeeded);
 void
 vsf_log_init(struct vsf_session* p_sess)
 {
@@ -149,7 +149,7 @@ vsf_log_common(struct vsf_session* p_sess, int succeeded,
   if (p_sess->vsftpd_log_fd != -1)
   {
     vsf_log_do_log_vsftpd_format(p_sess, &s_log_str, succeeded, what, p_str);
-    vsf_log_do_log_to_file_fail(p_sess->vsftpd_log_fd, &s_log_str, succeeded);
+    vsf_log_do_log_to_file(p_sess->vsftpd_log_fd, &s_log_str);
   }
   /* Handle syslog() line if appropriate */
   if (tunable_syslog_enable)
@@ -185,27 +185,27 @@ vsf_log_do_log_to_file(int fd, struct mystr* p_str)
   }
 }
 
-static void
-vsf_log_do_log_to_file_fail(int fd, struct mystr* p_str, int succeeded)
-{ 
-  if (!tunable_no_log_lock)
-  {
-    int retval = vsf_sysutil_lock_file_write(fd);
-    if (vsf_sysutil_retval_is_error(retval))
-    {
-      return;
-    }
-  }
-  str_replace_unprintable(p_str, '?');
-  str_append_char(p_str, '\n');
+// static void
+// vsf_log_do_log_to_file_fail(int fd, struct mystr* p_str, int succeeded)
+// { 
+//   if (!tunable_no_log_lock)
+//   {
+//     int retval = vsf_sysutil_lock_file_write(fd);
+//     if (vsf_sysutil_retval_is_error(retval))
+//     {
+//       return;
+//     }
+//   }
+//   str_replace_unprintable(p_str, '?');
+//   str_append_char(p_str, '\n');
   
-  /* Ignore write failure; maybe the disk filled etc. */
-  (void) str_write_loop(p_str, fd);
-  if (!tunable_no_log_lock)
-  {
-    vsf_sysutil_unlock_file(fd);
-  }
-}
+//   /* Ignore write failure; maybe the disk filled etc. */
+//   (void) str_write_loop(p_str, fd);
+//   if (!tunable_no_log_lock)
+//   {
+//     vsf_sysutil_unlock_file(fd);
+//   }
+// }
 
 
 static void
