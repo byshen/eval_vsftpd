@@ -2,6 +2,7 @@
     "files.associations": {
         "*.cu": "cpp",
         "ls.h": "c",
-        "__config": "c"
+        "__config": "c",
+        "sysdeputil.h": "c"
     }
 }
