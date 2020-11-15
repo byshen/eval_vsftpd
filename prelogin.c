@@ -36,12 +36,12 @@ static void check_login_delay();
 static void check_login_fails(struct vsf_session* p_sess);
 
 
-void log_user_list(struct vsf_session* p_sess) {
-/* modified */
-    struct mystr tmp_log;
-    str_alloc_text(&tmp_log, "Permission denied because of configuration: userlist_file and userlist_deny.");
-    vsf_log_common(p_sess, 0, kVSFLogEntryLogin , &tmp_log);
-}
+// void log_user_list(struct vsf_session* p_sess) {
+// /* modified */
+//     struct mystr tmp_log;
+//     str_alloc_text(&tmp_log, "Permission denied because of configuration: userlist_file and userlist_deny.");
+//     vsf_log_common(p_sess, 0, kVSFLogEntryLogin , &tmp_log);
+// }
 
 void
 init_connection(struct vsf_session* p_sess)
@@ -253,7 +253,7 @@ handle_user_command(struct vsf_session* p_sess)
     {
       check_login_delay();
       /*Modify*/
-      log_user_list(p_sess);
+      // log_user_list(p_sess);
       vsf_cmdio_write(p_sess, FTP_LOGINERR, "Permission denied.");
       check_login_fails(p_sess);
       str_empty(&p_sess->user_str);
